@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Welcome to Protection in python’s documentation! &#8212; Protection in python 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-Protection.distance">
+<span id="welcome-to-protection-in-python-s-documentation"></span><h1>Welcome to Protection in python’s documentation!<a class="headerlink" href="#module-Protection.distance" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Protection.distance.ABB_REO517_settings">
+<em class="property">class </em><code class="descclassname">Protection.distance.</code><code class="descname">ABB_REO517_settings</code><span class="sig-paren">(</span><em>r1</em>, <em>r2</em>, <em>r3</em>, <em>x1</em>, <em>x2</em>, <em>x3</em>, <em>a</em>, <em>g</em>, <em>dx=0</em>, <em>dy=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.ABB_REO517_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Settings for Siprotec 7ST63x
+Values are given and saved as primary values
+:param - <em>r1</em>:
+:type - <em>r1</em>: Resistance reach of first zone
+:param - <em>r2</em>:
+:type - <em>r2</em>: Resistance reach of second zone
+:param - <em>r3</em>:
+:type - <em>r3</em>: Resistance reach of third zone
+:param - <em>x1</em>:
+:type - <em>x1</em>: Reactance reach of first zone
+:param - <em>x2</em>:
+:type - <em>x2</em>: Reactance reach of second zone
+:param - <em>x3</em>:
+:type - <em>x3</em>: Reactance reach of third zone
+:param - <em>a1</em>:
+:type - <em>a1</em>: Alpha reach of first zone (first quadrant)
+:param - <em>a2</em>:
+:type - <em>a2</em>: Alpha reach of second zone (first quadrant)
+:param - <em>a3</em>:
+:type - <em>a3</em>: Alpha reach of third zone (first quadrant)
+:param - <em>g1</em>:
+:type - <em>g1</em>: Gamma reach of first zone (4. quadrant, defined positive)
+:param - <em>g2</em>:
+:type - <em>g2</em>: Gamma reach of second zone (4. quadrant, defined positive)
+:param - <em>g3</em>:
+:type - <em>g3</em>: Gamma reach of third zone (4. quadrant, defined positive)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="Protection.distance.impedanceDiagram">
+<em class="property">class </em><code class="descclassname">Protection.distance.</code><code class="descname">impedanceDiagram</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.impedanceDiagram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for impedance Diagram</p>
+<p>Example:</p>
+<p>import Protection.distance as prot
+a = prot.impedanceDiagram(“U1”)
+a.test()</p>
+<dl class="method">
+<dt id="Protection.distance.impedanceDiagram.draw_ending">
+<code class="descname">draw_ending</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.impedanceDiagram.draw_ending" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finishing up the drawing by adding legends, etx</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.impedanceDiagram.draw_first_section">
+<code class="descname">draw_first_section</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.impedanceDiagram.draw_first_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for drawing sections towards next stations.
+r,x,name at end</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.impedanceDiagram.draw_infeed">
+<code class="descname">draw_infeed</code><span class="sig-paren">(</span><em>r1</em>, <em>x1</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.impedanceDiagram.draw_infeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for drawing the infeed curve</p>
+<dl class="simple">
+<dt>Formula:</dt><dd><p>Z_seen_from_relay = U^2 / ((U^2/Z) - P_infeed)
+<em>U</em>: lowest accepted voltage
+<em>Z</em>: impedance of section
+<em>P_infeed</em>: infeed power from train or branch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.impedanceDiagram.draw_load_at_beginning">
+<code class="descname">draw_load_at_beginning</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.impedanceDiagram.draw_load_at_beginning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for drawing load at beginning of section
+Draws points at 7 intervall between 0 and maximum phi.
+If 60 degree, one pr 10 degree.</p>
+<dl class="simple">
+<dt>Method:</dt><dd><p>Rp = <a href="#id1"><span class="problematic" id="id2">|</span></a>U|^2 / (S_load*cos(phi))
+Xp = <a href="#id3"><span class="problematic" id="id4">|</span></a>U|^2 / (S_load*sin(phi))
+q = Rp/Xp
+Rs = Rp/(q^2+1)
+Xs = Rs*q</p>
+</dd>
+</dl>
+<p>Typical values S = 10 MVA
+U = 10 kV
+phi = 0 - 60 deg</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.impedanceDiagram.draw_load_at_end">
+<code class="descname">draw_load_at_end</code><span class="sig-paren">(</span><em>r1</em>, <em>x1</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.impedanceDiagram.draw_load_at_end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for drawing load at end of section
+Draws points at 7 intervall between 0 and maximum phi.
+If 60 degree, one pr 10 degree.</p>
+<dl class="simple">
+<dt>Method:</dt><dd><p>Rp = <a href="#id5"><span class="problematic" id="id6">|</span></a>U|^2 / (S_load*cos(phi))
+Xp = <a href="#id7"><span class="problematic" id="id8">|</span></a>U|^2 / (S_load*sin(phi))
+q = Rp/Xp
+Rs = Rp/(q^2+1) + section_resistance
+Xs = Rs*q + sectioin_reactance</p>
+</dd>
+</dl>
+<p>Typical values S = 10 MVA
+U = 10 kV
+phi = 0 - 60 deg</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.impedanceDiagram.draw_second_section">
+<code class="descname">draw_second_section</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.impedanceDiagram.draw_second_section" title="Permalink to this definition">¶</a></dt>
+<dd><p>Functioin for drawing sections behind the next station
+r,x,name_at_start, name_at_end</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.impedanceDiagram.draw_setup">
+<code class="descname">draw_setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.impedanceDiagram.draw_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>figure, ax, xlim, ylim …</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.impedanceDiagram.find_highest_reactance_of_infeed">
+<code class="descname">find_highest_reactance_of_infeed</code><span class="sig-paren">(</span><em>r1</em>, <em>x1</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.impedanceDiagram.find_highest_reactance_of_infeed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for finding the highest reactance based on infeed</p>
+<dl class="simple">
+<dt>Formula:</dt><dd><p>Z_seen_from_relay = U^2 / ((U^2/Z) - P_infeed)
+<em>U</em>: lowest accepted voltage
+<em>Z</em>: impedance of section
+<em>P_infeed</em>: infeed power from train or branch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="Protection.distance.siprotec_7ST63x_settings">
+<em class="property">class </em><code class="descclassname">Protection.distance.</code><code class="descname">siprotec_7ST63x_settings</code><span class="sig-paren">(</span><em>z1</em>, <em>z2</em>, <em>z3</em>, <em>r1=5.0</em>, <em>r2=5.0</em>, <em>r3=5.0</em>, <em>a1=30</em>, <em>a2=30</em>, <em>a3=30</em>, <em>b1=135</em>, <em>b2=135</em>, <em>b3=135</em>, <em>g1=15</em>, <em>g2=15</em>, <em>g3=15</em>, <em>dx=0</em>, <em>dy=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.siprotec_7ST63x_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Settings for Siprotec 7ST63x
+Values are given and saved as primary values
+:param - <em>z1</em>:
+:type - <em>z1</em>: Impedance reach of first zone
+:param - <em>z2</em>:
+:type - <em>z2</em>: Impedance reach of second zone
+:param - <em>z3</em>:
+:type - <em>z3</em>: Impedance reach of third zone
+:param - <em>r1</em>:
+:type - <em>r1</em>: Resistance reach of first zone
+:param - <em>r2</em>:
+:type - <em>r2</em>: Resistance reach of second zone
+:param - <em>r3</em>:
+:type - <em>r3</em>: Resistance reach of third zone
+:param - <em>a1</em>:
+:type - <em>a1</em>: Alpha reach of first zone (first quadrant)
+:param - <em>a2</em>:
+:type - <em>a2</em>: Alpha reach of second zone (first quadrant)
+:param - <em>a3</em>:
+:type - <em>a3</em>: Alpha reach of third zone (first quadrant)
+:param - <em>b1</em>:
+:type - <em>b1</em>: Beta reach of first zone (2. quadrant)
+:param - <em>b2</em>:
+:type - <em>b2</em>: Beta reach of second zone (2. quadrant)
+:param - <em>b3</em>:
+:type - <em>b3</em>: Beta reach of third zone (2. quadrant)
+:param - <em>g1</em>:
+:type - <em>g1</em>: Gamma reach of first zone (4. quadrant, defined positive)
+:param - <em>g2</em>:
+:type - <em>g2</em>: Gamma reach of second zone (4. quadrant, defined positive)
+:param - <em>g3</em>:
+:type - <em>g3</em>: Gamma reach of third zone (4. quadrant, defined positive)</p>
+<dl class="method">
+<dt id="Protection.distance.siprotec_7ST63x_settings.change_CT_ratio">
+<code class="descname">change_CT_ratio</code><span class="sig-paren">(</span><em>CT_prim</em>, <em>CT_sek</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.siprotec_7ST63x_settings.change_CT_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for changing the current transformer ratio.
+Default: 800/5 A</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.siprotec_7ST63x_settings.change_VT_ratio">
+<code class="descname">change_VT_ratio</code><span class="sig-paren">(</span><em>VT_prim</em>, <em>VT_sek</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.siprotec_7ST63x_settings.change_VT_ratio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for changing the voltage transformer ratio.
+Default: 16000/110 V</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.siprotec_7ST63x_settings.draw_all">
+<code class="descname">draw_all</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.siprotec_7ST63x_settings.draw_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the diagram in the order:
+Z3, Z2, Z1, grid lines</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.siprotec_7ST63x_settings.draw_zone1">
+<code class="descname">draw_zone1</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.siprotec_7ST63x_settings.draw_zone1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Code for drawing Zone 1
+Parameter
+———
+<em>ax</em> : matplotlib.axes where the drawing is to be added</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.siprotec_7ST63x_settings.draw_zone2">
+<code class="descname">draw_zone2</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.siprotec_7ST63x_settings.draw_zone2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Code for drawing Zone 2
+Parameter
+———
+<em>ax</em> : matplotlib.axes where the drawing is to be added</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.siprotec_7ST63x_settings.draw_zone3">
+<code class="descname">draw_zone3</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.siprotec_7ST63x_settings.draw_zone3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Code for drawing Zone 3
+Parameter
+———
+<em>ax</em> : matplotlib.axes where the drawing is to be added</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.siprotec_7ST63x_settings.scale_ax">
+<code class="descname">scale_ax</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.siprotec_7ST63x_settings.scale_ax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function for scaling the diagram according to zone 3
+Parameter
+———
+<em>ax</em> : matplotlib.axes where the drawings are to be added</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Protection.distance.siprotec_7ST63x_settings.to_secondary_values">
+<code class="descname">to_secondary_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Protection.distance.siprotec_7ST63x_settings.to_secondary_values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print impedances in secondary values
+Primary Z = U / I</p>
+<p>Secondary current I’ = I * CT_secondary/CT_primary
+Secondary voltage U’ = U * VT_secondary/VT_primary</p>
+<dl class="simple">
+<dt>Secondary Z’ = U’ / I’ = U * VT_secondary/VT_primary / (I * CT_secondary/CT_primary)</dt><dd><p>Z’ = Z * (VT_secondary/VT_primary)/(CT_secondary/CT_primary)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt>
+<em class="property">class </em><code class="descclassname">Protection.distance.</code><code class="descname">impedanceDiagram</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span></dt>
+<dd><p>Class for impedance Diagram</p>
+<p>Example:</p>
+<p>import Protection.distance as prot
+a = prot.impedanceDiagram(“U1”)
+a.test()</p>
+<dl class="method">
+<dt>
+<code class="descname">draw_ending</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Finishing up the drawing by adding legends, etx</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">draw_first_section</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Function for drawing sections towards next stations.
+r,x,name at end</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">draw_infeed</code><span class="sig-paren">(</span><em>r1</em>, <em>x1</em>, <em>path</em><span class="sig-paren">)</span></dt>
+<dd><p>Function for drawing the infeed curve</p>
+<dl class="simple">
+<dt>Formula:</dt><dd><p>Z_seen_from_relay = U^2 / ((U^2/Z) - P_infeed)
+<em>U</em>: lowest accepted voltage
+<em>Z</em>: impedance of section
+<em>P_infeed</em>: infeed power from train or branch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">draw_load_at_beginning</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Function for drawing load at beginning of section
+Draws points at 7 intervall between 0 and maximum phi.
+If 60 degree, one pr 10 degree.</p>
+<dl class="simple">
+<dt>Method:</dt><dd><p>Rp = <a href="#id9"><span class="problematic" id="id10">|</span></a>U|^2 / (S_load*cos(phi))
+Xp = <a href="#id11"><span class="problematic" id="id12">|</span></a>U|^2 / (S_load*sin(phi))
+q = Rp/Xp
+Rs = Rp/(q^2+1)
+Xs = Rs*q</p>
+</dd>
+</dl>
+<p>Typical values S = 10 MVA
+U = 10 kV
+phi = 0 - 60 deg</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">draw_load_at_end</code><span class="sig-paren">(</span><em>r1</em>, <em>x1</em><span class="sig-paren">)</span></dt>
+<dd><p>Function for drawing load at end of section
+Draws points at 7 intervall between 0 and maximum phi.
+If 60 degree, one pr 10 degree.</p>
+<dl class="simple">
+<dt>Method:</dt><dd><p>Rp = <a href="#id13"><span class="problematic" id="id14">|</span></a>U|^2 / (S_load*cos(phi))
+Xp = <a href="#id15"><span class="problematic" id="id16">|</span></a>U|^2 / (S_load*sin(phi))
+q = Rp/Xp
+Rs = Rp/(q^2+1) + section_resistance
+Xs = Rs*q + sectioin_reactance</p>
+</dd>
+</dl>
+<p>Typical values S = 10 MVA
+U = 10 kV
+phi = 0 - 60 deg</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">draw_second_section</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Functioin for drawing sections behind the next station
+r,x,name_at_start, name_at_end</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">draw_setup</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>figure, ax, xlim, ylim …</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">find_highest_reactance_of_infeed</code><span class="sig-paren">(</span><em>r1</em>, <em>x1</em><span class="sig-paren">)</span></dt>
+<dd><p>Function for finding the highest reactance based on infeed</p>
+<dl class="simple">
+<dt>Formula:</dt><dd><p>Z_seen_from_relay = U^2 / ((U^2/Z) - P_infeed)
+<em>U</em>: lowest accepted voltage
+<em>Z</em>: impedance of section
+<em>P_infeed</em>: infeed power from train or branch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Protection in python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Knut Bjorsvik.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

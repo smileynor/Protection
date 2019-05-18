@@ -417,7 +417,6 @@ class impedanceDiagram(object):
         Typical values S = 10 MVA
         U = 10 kV
         phi = 0 - 60 deg
-
         """
         U = self.undervoltage_setting
         S = self.undervoltage_setting*self.overcurrent_setting/1000
