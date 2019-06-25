@@ -32,6 +32,7 @@ def create_main_page(body):
     return """
 <html>
     <head>
+    <meta charset="utf-8">
 {0}
         <style>
         body {margin:0 100; background:whitesmoke;
