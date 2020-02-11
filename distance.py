@@ -3,9 +3,31 @@ import matplotlib.pyplot as plt
 import matplotlib
 
 def calculateZone1_normal(imp_of_line):
+    """Calculate normal value of distance protection Zone 1
+
+    Uses the normal margin of 0.15 to calculate the absolute value
+    of the distance protection Zone 1.
+
+    Args:
+        imp_of_line (float): The absolute primary impedance value to next protection device
+
+    Returns (float): Calculated primary value, `0.85 x longer` than input.
+
+    """
     return imp_of_line*0.85
 
 def calculateZone2_normal(imp_of_line):
+    """Calculate normal value of distance protection Zone 2
+
+    Uses the normal margin of 0.20 to calculate the absolute value
+    of the distance protection Zone 2.
+
+    Args:
+        imp_of_line (float): The absolute primary impedance value to next protection device
+
+    Returns (float): Calculated primary value, `1.2 x longer` than input.
+
+    """
     return imp_of_line*1.2
 
 def calculateZone3_normal(imp_of_line,imp_of_next_line):
@@ -31,23 +53,16 @@ def findLongestDistanceOfInfeed(r,x):
 class siprotec_7ST63x_settings(object):
     """Settings for Siprotec 7ST63x
     Values are given and saved as primary values
-    Parameters
-    ----------
-     - *z1* : Impedance reach of first zone
-     - *z2* : Impedance reach of second zone
-     - *z3* : Impedance reach of third zone
-     - *r1* : Resistance reach of first zone
-     - *r2* : Resistance reach of second zone
-     - *r3* : Resistance reach of third zone
-     - *a1* : Alpha reach of first zone (first quadrant)
-     - *a2* : Alpha reach of second zone (first quadrant)
-     - *a3* : Alpha reach of third zone (first quadrant)
-     - *b1* : Beta reach of first zone (2. quadrant)
-     - *b2* : Beta reach of second zone (2. quadrant)
-     - *b3* : Beta reach of third zone (2. quadrant)
-     - *g1* : Gamma reach of first zone (4. quadrant, defined positive)
-     - *g2* : Gamma reach of second zone (4. quadrant, defined positive)
-     - *g3* : Gamma reach of third zone (4. quadrant, defined positive)
+
+    Attributes:
+        CT_ratio_P1 (int): The primary rating of the Current transformer
+        CT_ratio_P2 (int): The secondary rating of the Current transformer
+        VT_ratio_P1 (int): The primary rating of the Voltage transformer
+        VT_ratio_P2 (int): The secondaru rating of the Voltage transformer
+
+    Methods:
+        draw_zone_general(ax, z, r, a, b, g, dx=0, dy=0, facecolor="white", alpha=0.4, label="Sone")
+
     """
     paths = []
     CT_ratio_P1 = 800
@@ -55,36 +70,194 @@ class siprotec_7ST63x_settings(object):
     VT_ratio_P1 = 16000
     VT_ratio_P2 = 110
 
-    def __init__(self, z1, z2, z3, r1=5.0, r2=5.0, r3=5.0, a1=30, a2=30, a3=30, b1=135, b2=135, b3=135, g1=15, g2=15, g3=15, dx=0, dy=0):
+    def __init__(self, z1, z2, z3, r1=5.0, r2=None, r3=None, a1=30, a2=None, a3=None, b1=135, b2=None, b3=None, g1=15, g2=None, g3=None, dx=0, dy=0):
+        """Settings for Siprotec 7ST63x
+        Values are given and saved as primary values
+
+        Args:
+            z1 (float): Impedance reach of first zone
+            z2 (float): Impedance reach of second zone
+            z3 (float): Impedance reach of third zone
+            r1 (float): Resistance reach of first zone
+            r2 (float, optional): Resistance reach of second zone
+            r3 (float, optional): Resistance reach of third zone
+            a1 (float): Alpha reach of first zone (first quadrant)
+            a2 (float, optional): Alpha reach of second zone (first quadrant)
+            a3 (float, optional): Alpha reach of third zone (first quadrant)
+            b1 (float): Beta reach of first zone (2. quadrant)
+            b2 (float, optional): Beta reach of second zone (2. quadrant)
+            b3 (float, optional): Beta reach of third zone (2. quadrant)
+            g1 (float): Gamma reach of first zone (4. quadrant, defined positive)
+            g2 (float, optional): Gamma reach of second zone (4. quadrant, defined positive)
+            g3 (float, optional): Gamma reach of third zone (4. quadrant, defined positive)
+            dx (float, optional): Movement in dx direction.
+            dy (float, optional): Movement in dy direction.
+        """
         self.z1 = np.float(z1)
         self.z2 = np.float(z2)
         self.z3 = np.float(z3)
+
         self.r1 = np.float(r1)
-        self.r2 = np.float(r2)
-        self.r3 = np.float(r3)
+        if r2 == None:
+            self.r2 = self.r1
+        else:
+            self.r2 = np.float(r2)
+        if r3 == None:
+            self.r3 = self.r2
+        else:
+            self.r3 = np.float(r3)
+
         self.a1 = np.float(a1)
-        self.a2 = np.float(a2)
-        self.a3 = np.float(a3)
+        if a2 == None:
+            self.a2 = self.a1
+        else:
+            self.a2 = np.float(a2)
+        if a3 == None:
+            self.a3 = self.a2
+        else:
+            self.a3 = np.float(a3)
+
         self.b1 = np.float(b1)
-        self.b2 = np.float(b2)
-        self.b3 = np.float(b3)
+        if b2 == None:
+            self.b2 = self.b1
+        else:
+            self.b2 = np.float(b2)
+        if b3 == None:
+            self.b3 = self.b2
+        else:
+            self.b3 = np.float(b3)
+
         self.g1 = np.float(g1)
-        self.g2 = np.float(g2)
-        self.g3 = np.float(g3)
+        if g2 == None:
+            self.g2 = self.g1
+        else:
+            self.g2 = np.float(g2)
+        if g3 == None:
+            self.g3 = self.g2
+        else:
+            self.g3 = np.float(g3)
+
         self.dx = np.float(dx)
         self.dy = np.float(dy)
 
-    def improvement(self):
-        # Draw_zone1(2,3) kan lages generisk, slik at fra draw_all så hentes
-        # draw_Zone1(ax,**kwargs), der **kwargs == facecolor='red', alpha=0.4, label="Sone 1"
-        # draw_Zone1(ax,**kwargs), der **kwargs == facecolor='blue', alpha=0.3, label="Sone 2"
-        # draw_Zone1(ax,**kwargs), der **kwargs == facecolor='green', alpha=0.3, label="Sone 3"
-        # og **kwargs legges til ved patch i hver av dem.
-        # i stedet for å hente self.verdier så kan de sendes inn til en generell.
-        pass
+    def draw_zone_general(ax, z, r, a, b, g, dx=0, dy=0, facecolor="white", alpha=0.4, label="Sone"):
+        """Draw a zone to ax
 
+        Args:
+            ax (`matplotlib.ax`): Ax for drawing
+            z (float):  Zone reach Z
+            r (float):  Zone resistance reach R
+            a (int): Zone Alpha, 1st quadrant
+            b (int): Zone Beta, 2nd quadrant
+            g (int): Zone Gamma, 4th quadrant
+            dx (float): Movement in x direction
+            dy (float): Movement in y direction
+            facecolor (strtr): Facecolor of the returned zone
+            alpha (float): Transparancy of facecolor
+            label (str): Name of the zone
+
+        Returns: `matplotlib.path` for checking if points is inside.
+
+        """
+        z = np.abs(z)
+
+        points = []
+        n = np.linspace(0, 1, 30)
+
+        # First point
+        points.append(tuple([np.float(0), np.float(0)]))
+        # Points in 4. quadrant
+        points.append(tuple([r, -r * np.sin(np.deg2rad(g))/np.cos(np.deg2rad(g))]))
+        # Points in 1. quadrant
+        points.append(tuple([r, r * np.sin(np.deg2rad(a))/np.cos(np.deg2rad(a))]))
+        points.append(tuple([z * np.cos(np.deg2rad(a)), z * np.sin(np.deg2rad(a))]))
+        # Cirkle line towards 2. quadrant
+        x1 = z * np.cos(np.deg2rad(a + n * (b - a)))
+        y1 = z * np.sin(np.deg2rad(a + n * (b - a)))
+
+        # Drawing procedure
+        codes = [matplotlib.path.Path.MOVETO,
+                 matplotlib.path.Path.LINETO,
+                 matplotlib.path.Path.LINETO,
+                 matplotlib.path.Path.LINETO]
+
+        for x, y in np.nditer([x1, y1]):
+            points.append(tuple([np.float(x), np.float(y)]))
+            codes.append(matplotlib.path.Path.LINETO)
+
+        points.append(tuple([np.float(0), np.float(0)]))
+        codes.append(matplotlib.path.Path.CLOSEPOLY)
+
+        # Movement?
+        if dy != 0 or dx != 0:
+            new_position = []
+            for i in points:
+                new_position.append(tuple([list(i)[0] + dx, list(i)[1] + dy]))
+
+            points = new_position
+
+        # Edges to vertices (points)
+        path = matplotlib.path.Path(points, codes)
+        patch = matplotlib.patches.PathPatch(path, facecolor=facecolor, alpha=alpha, label=label)
+
+        # Draw zone
+        ax.add_patch(patch)
+
+        # Save path
+        #paths.append(path)
+        return path
 
     def draw_zone1(self, ax):
+        """Draw Zone 1 onto ax.
+
+        Calls `draw_zone_general` for creating diagram.
+        The code appends a `matplotlib.path`to the internal class variable `paths` to see if future points is subset of path.
+
+        Args:
+            ax (`matplotlib.ax`): Ax where drawing should be placed
+        """
+
+        self.paths.append(draw_zone_general(ax=ax, z=self.z1, r=self.r1, a=self.a1, b=self.b1, g=self.g1,
+                                            dx=0, dy=0, facecolor="red", alpha=0.4, label="Sone 1"))
+
+    def draw_zone2(self, ax):
+        """Draw Zone 2 onto ax.
+
+        Calls `draw_zone_general` for creating diagram.
+        The code appends a `matplotlib.path`to the internal class variable `paths` to see if future points is subset of path.
+
+        Args:
+            ax (`matplotlib.ax`): Ax where drawing should be placed
+        """
+
+        self.paths.append(draw_zone_general(ax=ax, z=self.z2, r=self.r2, a=self.a2, b=self.b2, g=self.g2,
+                                            dx=0, dy=0, facecolor="blue", alpha=0.3, label="Sone 2"))
+
+    def draw_zone3(self, ax):
+        """Draw Zone 3 onto ax.
+
+        Calls `draw_zone_general` for creating diagram.
+        The code appends a `matplotlib.path`to the internal class variable `paths` to see if future points is subset of path.
+
+        Args:
+            ax (`matplotlib.ax`): Ax where drawing should be placed
+        """
+        self.paths.append(draw_zone_general(ax=ax, z=self.z3, r=self.r3, a=self.a3, b=self.b3, g=self.g3,
+                                            dx=0, dy=0, facecolor="green", alpha=0.3, label="Sone 3"))
+
+    def scale_ax(self, ax):
+        ax.autoscale(enable=True)
+
+        # drawing of guiding lines
+
+        maksScale = max(ax.get_ylim(), ax.get_xlim())
+
+        for i in range(1, int(maksScale / 5) + 2):
+            circles = matplotlib.patches.Circle((0, 0), radius=5 * i, linestyle=':', fill=False, alpha=0.3)
+            ax.add_patch(circles)
+
+
+    def draw_zone1Old(self, ax):
         """Code for drawing Zone 1
         Parameter
         ---------
@@ -135,7 +308,7 @@ class siprotec_7ST63x_settings(object):
         self.paths.append(path)
         return path
 
-    def draw_zone2(self, ax):
+    def draw_zone2Old(self, ax):
         """Code for drawing Zone 2
         Parameter
         ---------
@@ -186,7 +359,7 @@ class siprotec_7ST63x_settings(object):
         self.paths.append(path)
         return path
 
-    def draw_zone3(self, ax):
+    def draw_zone3Old(self, ax):
         """Code for drawing Zone 3
         Parameter
         ---------
@@ -237,7 +410,7 @@ class siprotec_7ST63x_settings(object):
         self.paths.append(path)
         return path
 
-    def scale_ax(self,ax):
+    def scale_axOld(self,ax):
         """Function for scaling the diagram according to zone 3
         Parameter
         ---------
@@ -341,11 +514,8 @@ class ABB_REO517_settings(object):
         return (self.draw_zone(ax, H1=self.x3, R1=0, R2=self.r3, facecolor='green', alpha=0.3, label="Sone 3", **kwargs))
 
     def draw_zone(self, ax, H1 = 5, R1 = 5, R2 = None, **kwargs):
-        """Code for drawing Zone 1
+        """Code for drawing Zone
 
-        Parameter
-        ---------
-        *ax* : matplotlib.axes where the drawing is to be added
             F_____E__________________ / D
              \    |                 /
               \   |           ... /G
@@ -355,17 +525,22 @@ class ABB_REO517_settings(object):
                         \I
                             \B
 
-            :param H1: Height of X
-            :param R1: Resistance blender
-            :param R2: Resistance length
-            :param Gamma: Angle in degree CAB
-            :param Alpha: Angle in degree CAG
-            :param Beta: Angle in degree CAF
-            :param Theta: Angle in degree ACB
 
-        Return
-        ---------
-        ax.path
+        Gamma: Angle in degree CAB
+        Alpha: Angle in degree CAG
+        Beta: Angle in degree CAF
+        Theta: Angle in degree ACB
+
+        Args:
+            ax (`matplotlib.ax`): matplotlib.ax where the drawing is to be added
+            H1 (float): Height of X
+            R1 (float): Resistance blender
+            R2 (float): Resistance length
+            **kwargs ():
+
+        Returns:
+            `matplotlib.path`
+
         """
 
         # getting the settings:
@@ -451,7 +626,6 @@ class ABB_REO517_settings(object):
         ax.axvline(x=0, color='gray', linestyle=':')
         ax.set_xlabel(xlabel="R [$\Omega$]")
         ax.set_ylabel(ylabel="X [$\Omega$]")
-        ax.set_title("Tittel")
 
         # Edges to vertices (points)
         path = matplotlib.path.Path(points, codes)
@@ -616,8 +790,8 @@ class impedanceDiagram(object):
     plt.show()
 
     """
-    ax = ""
-    fig = ""
+    ax = None
+    fig = None
     settings = []
     first_sections = []
     second_sections = []
@@ -627,15 +801,20 @@ class impedanceDiagram(object):
     max_load_angle = 60 # degree
 
 
-    def __init__(self, name):
+    def __init__(self, name, ax=None):
         self.name = name
+        if ax != None:
+            self.ax = ax
+
 
     def draw_setup(self):
         """figure, ax, xlim, ylim ..."""
-        self.fig = plt.figure()
-        self.ax = self.fig.add_subplot(111)
+        if self.ax is None:
+            self.fig = plt.figure()
+            self.ax = self.fig.add_subplot(111)
         #self.ax.set_xlim(-40, 40) # MÅ LAGES MER FLEKSIBEL
         #self.ax.set_ylim(-10, 50) # MÅ LAGES MER FLEKSIBEL
+        self.ax.autoscale(enable=True)
         self.ax.axhline(y=0, color='gray', linestyle=':')
         self.ax.axvline(x=0, color='gray', linestyle=':')
         self.ax.set_xlabel(xlabel="R [$\Omega$]")
@@ -1029,7 +1208,6 @@ def polytest(H1, R1, R2=None, Gamma=15, Alpha=30, Beta=135, Theta=12, **kwargs):
     ax.axvline(x=0, color='gray', linestyle=':')
     ax.set_xlabel(xlabel="R [$\Omega$]")
     ax.set_ylabel(ylabel="X [$\Omega$]")
-    ax.set_title("Tittel")
 
     # Edges to vertices (points)
     path = matplotlib.path.Path(points, codes)
@@ -1064,6 +1242,103 @@ for r,x,i in a.first_sections:
     a.draw_min_SSC_at_section_end(4,r,x)
     a.draw_infeed(4,4,b.paths[1])
 
+a.ax.legend(loc="lower left",fontsize = 'x-small')
 plt.show()
-
 """
+
+def createFullImpedanceFigure(z1,z2,z_sone1, z_sone2, z_sone3, r1=5.0, r2=None, r3=None, a1=30, a2=None, a3=None, b1=135, b2=None, b3=None, g1=15, g2=None, g3=None,  protectionType="Siprotec 7ST63", nameBay="Impedance diagram", nameAfterZ1="first", nameAfterZ2="second", minimumSSC=800, lowestVoltage=10, ax=None, **kwargs):
+    """Create and shows an impedance diagram
+
+    Args:
+        r1 (float): Resistance R Zone Z1 [0.20 .. 600.00 Ohm], normally 5
+        r2 (float): Resistance R Zone Z2 [0.20 .. 600.00 Ohm], if not specified, same as `r1`.
+        r3 (float): Resistance R Zone Z3 [0.20 .. 600.00 Ohm], if not specified, same as `r2`.
+        a1 (int): Angle Limitation Alpha Zone Z1 [-70 .. 75 °], normally 30
+        a2 (int): Angle Limitation Alpha Zone Z2 [-70 .. 75 °], if not specified, same as `a1`.
+        a3 (int): Angle Limitation Alpha Zone Z3 [-70 .. 75 °], if not specified, same as `a2`.
+        b1 (int): Angle Limitation Beta Zone Z1 [70 .. 145 °; 0], normally 135
+        b2 (int): Angle Limitation Beta Zone Z2 [70 .. 145 °; 0], if not specified, same as `b1`.
+        b3 (int): Angle Limitation Beta Zone Z3 [70 .. 145 °; 0], if not specified, same as `b2`.
+        g1 (int): Angle Limitation Gamma Zone Z1 [-70 .. 40 °], normally 15
+        g2 (int): Angle Limitation Gamma Zone Z2 [-70 .. 40 °], if not specified, same as `g1`
+        g3 (int): Angle Limitation Gamma Zone Z3 [-70 .. 40 °], if not specified, same as `g2`
+        z1 (complex): Primary value of impedance to next station.
+        z2 (complex): Primary value of impedance to second next station.
+        z_sone1 (complex, float): Primary values of impedance Z Zone Z1
+        z_sone2 (complex, float): Primary values of impedance Z Zone Z2
+        z_sone3 (complex, float): Primary values of impedance Z Zone Z3
+        protectionType (str): Defines what kind of protection device is used. Choose from [`"Siprotec 7ST63"`,`"REO 517"`,"RZYBE"]
+        nameBay (str): Name of the bay where the protection device is located. Used as a title for the diagram. Default `Impedance diagram`
+        nameAfterZ1 (str): Name of the station at the end of the protected zone.
+        nameAfterZ2 (str): Name of the station at the end of the second protected zone.
+        minimumSSC (float): Minimum short circuit currents in Ampere
+        lowestVoltage (float): Minimum voltage [kV] allowed from undervoltage protection. Default `10` kV.
+        ax (matplotlib.ax): Provide a place for the impedance diagram, Default None, if
+    """
+
+    # Update None values.
+    if r2 is None:
+        r2 = r1
+    if r3 is None:
+        r3 = r2
+    if a2 is None:
+        a2 = a1
+    if a3 is None:
+        a3 = a2
+    if b2 is None:
+        b2 = b1
+    if b3 is None:
+        b3 = b2
+    if g2 is None:
+        g2 = g1
+    if g3 is None:
+        g3 = g2
+
+    # Create figure
+    if ax == None:
+        fig, ax = plt.subplots(1,1,**kwargs)
+
+    ax.axhline(y=0, color='gray', linestyle=':')
+    ax.axvline(x=0, color='gray', linestyle=':')
+
+    # Add title, labels etc
+    ax.set_xlabel(xlabel="R [$\Omega$]")
+    ax.set_ylabel(ylabel="X [$\Omega$]")
+    ax.set_title(nameBay)
+
+
+
+    # Draw Zone 1, Zone 2, Zone 3
+    paths = []
+    if protectionType == "Siprotec 7ST63":
+        paths.append(siprotec_7ST63x_settings.draw_zone_general(ax=ax, z=z_sone3, r=r3, a=a3, b=b3, g=g3, facecolor="green",
+                                                       alpha=0.3,
+                                                       label="Sone 3"))
+        paths.append(siprotec_7ST63x_settings.draw_zone_general(ax=ax, z=z_sone2, r=r2, a=a2, b=b2, g=g2, facecolor="blue", alpha=0.3,
+                                                       label="Sone 2"))
+        paths.append(siprotec_7ST63x_settings.draw_zone_general(ax=ax, z=z_sone1, r=r1, a=a1, b=b1, g=g1,facecolor="red",label="Sone 1"))
+
+
+
+    if protectionType == "REO 517":
+        print("Not implemented")
+    if protectionType == "RZYBE":
+        print("Not implemented")
+
+    # Draw actual lines
+
+    # Draw infeed curve
+
+    # Draw load at beginning
+
+    # Draw load at end
+
+    # Draw minimum short circuit
+
+    # Show picture
+    ax.autoscale(enable=True)
+    print(ax.get_ylim())
+    print(ax.get_xlim())
+    plt.show()
+
+createFullImpedanceFigure(5+5j,6+6j,5,8,13)
